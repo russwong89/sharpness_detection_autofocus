@@ -83,7 +83,7 @@ def saveImageBW(name, img):
 @return     np.array: RGB image
 '''
 def readImageRGB(name):
-    return cv2.cvtColor(cv2.imread(img_name, cv2.IMREAD_COLOR), cv2.COLOR_RGB2BGR)
+    return cv2.cvtColor(cv2.imread(name, cv2.IMREAD_COLOR), cv2.COLOR_RGB2BGR)
 
 
 '''
@@ -93,4 +93,4 @@ def readImageRGB(name):
 @return     np.array: BW image
 '''
 def readImageBW(name):
-    return cv2.imread(img_name, cv2.IMREAD_GRAYSCALE)
+    return cv2.imread(name, cv2.IMREAD_GRAYSCALE)
