@@ -74,4 +74,5 @@ if __name__ == '__main__':
     subject_name='111'
     if len(sys.argv) >= 2:
         subject_name = sys.argv[1]
-    print getPoints(subject_name=subject_name, show_images=True)      
+    print getPoints(subject_name=subject_name, show_images=True) 
+    sys.exit()     
