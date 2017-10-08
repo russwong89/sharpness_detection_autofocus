@@ -67,14 +67,16 @@ def find_roots( coefficients ):
 #######################
 if __name__ == '__main__':
 
-	if( len(sys.argv) == 1):
-		print 'Please specify the subject name'
-		sys.exit()
+	#if( len(sys.argv) == 1 ):
+	#	print 'Please specify the subject name'
+	#	sys.exit()
 
-	arguments = str(sys.argv)
-	subject_name = arguments[1]
-
-	points = sc.getPoints(subject_name)
+	if ( len( sys.argv ) > 1 ):
+		arguments = str(sys.argv)
+		subject_name = arguments[1]
+		points = sc.getPoints(subject_name)
+	else:
+		points = sc.getPoints()
 
 	point1 = points[0]
 	point2 = points[1]
