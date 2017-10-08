@@ -10,7 +10,7 @@ from matplotlib import pyplot as plt
 
 import img_util
 
-DEFAULT_IMG_DIR = 'img/'
+DEFAULT_IMG_DIR = 'RTImg/'
 
 
 '''
@@ -18,14 +18,17 @@ DEFAULT_IMG_DIR = 'img/'
 @brief      Retrieves all images from a folder and loads them into black-and-white matrices
 @param[in]  folder: String representing path to folder containing images
 @return     images: List of black-and-white images
+@return     distances: List of focus distances corresponding to each image
 '''
 def loadImages(folder=DEFAULT_IMG_DIR):
     images = []
+    distances = []
     for file in os.listdir(folder):
         img = img_util.readImageBW(os.path.join(folder, file))
         if img is not None:
             images.append(img)
-    return images
+            distances.append(int(file[8:11]))
+    return images, distances
 
 
 '''
@@ -46,14 +49,29 @@ def getSharpness(images):
     return derivative_imgs, sharpness_vals
 
 
+'''
+@name       getPoints
+@brief      Finds (focus distance, sharpness) data points for a set of images
+@param[in]  subject_name: The subject name to search for
+@param[in]  show_images: Whether to display image derivatives using matplotlib 
+@return     points: List of 2-tuples representing (x,y) coordinates 
+'''
+def getPoints(subject_name='111', show_images=False):
+    images, distances = loadImages(folder=DEFAULT_IMG_DIR+subject_name)
+    derivative_imgs, sharpness_vals = getSharpness(images)
+    for i, img in enumerate(derivative_imgs):
+        if show_images:
+            img_util.plot(img, 'IMAGE', cmap='gray')
+        img_util.saveImageBW('img_' + str(i) + '.png', img)    
+        print 'Sharpness for img %d: %f' % (i, sharpness_vals[i])
+    return zip(distances, sharpness_vals)
+
+
 #######################
 ###  Main Function  ###
 #######################
 if __name__ == '__main__':
-    images = loadImages()
-    derivative_imgs, sharpness_vals = getSharpness(images)
-    for i, img in enumerate(derivative_imgs):
-        img_util.plot(img, 'IMAGE', cmap='gray')
-        img_util.saveImageBW('img_' + str(i) + '.png', img)    
-        print 'Sharpness for img %d: %f' % (i, sharpness_vals[i])
-        
+    subject_name='111'
+    if len(sys.argv) >= 2:
+        subject_name = sys.argv[1]
+    print getPoints(subject_name=subject_name, show_images=True)      
