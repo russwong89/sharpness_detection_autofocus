@@ -5,6 +5,7 @@
 '''
 
 import sys, os, math
+import sharpness_calc as sc
 
 '''
 @name		define_quad
@@ -67,14 +68,17 @@ def find_roots( coefficients ):
 if __name__ == '__main__':
 
 	if( len(sys.argv) == 1):
-		print 'Please pass in 3 points.'
+		print 'Please specify the subject name'
 		sys.exit()
 
 	arguments = str(sys.argv)
+	subject_name = arguments[1]
 
-	point1 = (float(arguments[1]), float(arguments[2]))
-	point2 = (float(arguments[3]), float(arguments[4]))
-	point3 = (float(arguments[5]), float(arguments[6]))
+	points = sc.getPoints(subject_name)
+
+	point1 = points[0]
+	point2 = points[1]
+	point3 = points[2]
 
 	print 'Point 1 = (%f, %f) \n Point 2 = (%f, %f) \n Point 3 = (%f, %f)' \
 			% (point1[0], point1[1], point2[0], point2[1], point3[0], point3[1])
