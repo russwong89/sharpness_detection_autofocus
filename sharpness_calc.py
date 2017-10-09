@@ -27,7 +27,7 @@ def loadImages(folder=DEFAULT_IMG_DIR):
         img = img_util.readImageBW(os.path.join(folder, file))
         if img is not None:
             images.append(img)
-            distances.append(int(file[8:11]))
+            distances.append(int(file[9:13]))
     return images, distances
 
 

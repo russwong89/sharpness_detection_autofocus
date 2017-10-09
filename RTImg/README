@@ -4,3 +4,8 @@ Imagesets are listed by Subject. The filenames will indicate focus distance and 
 
 For Example: 
 001-550-340.jpeg indicates Subject 001, 550mm away, focused at 340mm. 
+
+The autofocused image will always be designated as NNN-DDDD-0000, and will be placed at the beginning of every set. 
+
+All sets are organized in ascending order by focus distance, not chronologically. All focus distance information was 
+taken from File Metadata and Camera EXIF and is only accurate to whatever degree the lens permits.
