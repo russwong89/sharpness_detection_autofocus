@@ -28,6 +28,7 @@ def loadImages(folder=DEFAULT_IMG_DIR):
         if img is not None:
             images.append(img)
             distances.append(int(file[9:13]))
+            print file
     return images, distances
 
 

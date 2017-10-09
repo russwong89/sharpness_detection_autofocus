@@ -72,9 +72,10 @@ if __name__ == '__main__':
 	#	sys.exit()
 
 	if ( len( sys.argv ) > 1 ):
-		arguments = str(sys.argv)
-		subject_name = arguments[1]
-		points = sc.getPoints(subject_name)
+		# arguments = str(sys.argv)
+		subject_name = sys.argv[1]
+		print subject_name
+		points = sc.getPoints(subject_name, show_images=False)
 	else:
 		points = sc.getPoints()
 
@@ -85,7 +86,7 @@ if __name__ == '__main__':
 	print 'Point 1 = (%f, %f) \n Point 2 = (%f, %f) \n Point 3 = (%f, %f)' \
 			% (point1[0], point1[1], point2[0], point2[1], point3[0], point3[1])
 
-	quad_eq = define_quad(poin1, point2, point3)
+	quad_eq = define_quad(point1, point2, point3)
 
 	print 'Coefficients of quadratic equation: \n a = %f \n b = %f \n c = %f' \
 			% (quad_eq[2], quad_eq[1], quad_eq[0])
@@ -93,7 +94,7 @@ if __name__ == '__main__':
 	roots = find_roots(quad_eq)
 	print 'Roots of calculated quadratic equation are: %f, %f' % (roots[0], roots[1])
 
-	x_vertex = (roots[0] + roots[2]) / 2
+	x_vertex = (roots[0] + roots[1]) / 2
 
 	print 'Focusing distance of quadratic equation defined is: %f' % (x_vertex)
 
