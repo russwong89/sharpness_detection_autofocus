@@ -72,8 +72,12 @@ def getPoints(subject_name='111', show_images=False):
 ###  Main Function  ###
 #######################
 if __name__ == '__main__':
-    subject_name='111'
+    subject_name='001'
     if len(sys.argv) >= 2:
         subject_name = sys.argv[1]
-    print getPoints(subject_name=subject_name, show_images=True) 
-    sys.exit()     
+    points = getPoints(subject_name=subject_name, show_images=False)
+    print points
+    x = [p[0] for p in points]
+    y = [p[1] for p in points]
+    img_util.plotPoints(x, y, "Points")
+    sys.exit()

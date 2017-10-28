@@ -56,6 +56,16 @@ def plot(img, title, cmap=None, maximize=True):
     plt.show()
 
 
+def plotPoints(x, y, title, maximize=True):
+    plt.switch_backend('TkAgg')
+    if (maximize):
+        fig_manager = plt.get_current_fig_manager()
+        fig_manager.resize(*fig_manager.window.maxsize())
+    plt.title(title)
+    plt.scatter(x, y)
+    plt.show()
+
+
 '''
 @name       saveImageRGB
 @brief      Writes an RGB image to a file
