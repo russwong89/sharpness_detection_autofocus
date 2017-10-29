@@ -143,4 +143,4 @@ if __name__ == '__main__':
 	# Find the optimum sharpness and focus distance using Golden-Section 
 	opt = findOptimum(x_vals[0],x_vals[len(x_vals)-1],coefficients,x_vals)
 	print 'X: %f, Y: %f' % (opt[0], opt[1])
-	img_util.plotParabolas(coefficients, x_vals, 'Quadratic Spline')
+	img_util.plotParabolas(coefficients, x_vals, 'Quadratic Spline for Subject #' + subject_name)

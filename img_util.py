@@ -71,17 +71,21 @@ def plotPoints(points, title, maximize=True):
 def plotParabolas(coefficients, x_vals, title, maximize=True):
     x = []
     y = []
+    y_vals = []
     for i in range(len(x_vals)-1):
+        y_vals.append(coefficients[3*i]*x_vals[i]**2 + coefficients[3*i+1]*x_vals[i] + coefficients[3*i+2])
         for x_val in range(x_vals[i],x_vals[i+1]):
             x.append(x_val)
             y_val = coefficients[3*i]*x_val**2 + coefficients[3*i+1]*x_val + coefficients[3*i+2]
             y.append(y_val)
+    y_vals.append(coefficients[3*i]*x_vals[len(x_vals)-1]**2 + coefficients[3*i+1]*x_vals[len(x_vals)-1] + coefficients[3*i+2])
     plt.switch_backend('TkAgg')
     if (maximize):
         fig_manager = plt.get_current_fig_manager()
         fig_manager.resize(*fig_manager.window.maxsize())
     plt.title(title)
     plt.scatter(x,y)
+    plt.plot(x_vals, y_vals, color='r') 
     plt.show()
 '''
 @name       saveImageRGB
