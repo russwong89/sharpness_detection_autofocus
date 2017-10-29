@@ -3,7 +3,7 @@
 @brief   Determines appropriate matrices and vectors
          in the form [A]{x} = {b} required to solve for
          the coefficients of several quadratic functions
-         in a quadratic spline given n points of a function
+         in a quadratic spline given N points of a function
 @author  Russell Wong, 2017
 '''
 
