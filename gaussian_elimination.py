@@ -3,7 +3,7 @@
 @brief   Solves a system of linear equations in the form
          [A]{x} = {b} using Gaussian Elimination with
          partial pivoting
-@author  Russell Wong, 2017
+@author  Russell Wong, Yun-Ha Jung 2017
 '''
 
 import sys, os, math, cv2
@@ -31,7 +31,9 @@ def solve(A, b):
                 pivoting_index = row_index
         if pivoting_index != i:
             # Swap rows
-
+            temp = A[i]
+            A[i] = A[pivoting_index]
+            A[pivoting_index] = temp
 
         # Iterate through rows of A beneath current row
         for row_index in range(i+1,n):
@@ -46,6 +48,19 @@ def solve(A, b):
     ###########################
     ###  Back substitution  ###
     ###########################
+    for i in range(n-1, -1, -1):
+        # Initialize x[i] to b[i]
+        x[i] = b[i]
+
+        # Loop through every column from the left   
+        for j in range(n):
+            # Subtract all elements from x[i] except for itself
+            if i != j:
+                x[i] -= A[i][j]*x[j]
+        # Divide x[i] by the coefficient in the matrix
+        x[i] /= A[i][i]
+
+    return x
 
 
 #######################
