@@ -68,7 +68,7 @@ def plotPoints(points, title, maximize=True):
     plt.show()
 
 
-def plotParabolas(coefficients, x_vals, title, maximize=True):
+def plotParabolas(coefficients, x_vals, title, max_x, max_y, maximize=True):
     x = []
     y = []
     y_vals = []
@@ -85,7 +85,8 @@ def plotParabolas(coefficients, x_vals, title, maximize=True):
         fig_manager.resize(*fig_manager.window.maxsize())
     plt.title(title)
     plt.scatter(x,y)
-    plt.plot(x_vals, y_vals, color='r') 
+    plt.plot(x_vals, y_vals, color='r')
+    plt.plot(max_x, max_y, 'bo')
     plt.show()
 '''
 @name       saveImageRGB
