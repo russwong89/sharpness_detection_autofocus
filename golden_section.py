@@ -24,7 +24,7 @@ def testFunction(x):
 			x_vals: A vector of distance values corresponding to the endpoints of each parabola in the spline
 @return 	float: The calculated sharpness value
 '''
-'''
+
 def evalCubicSharpnessFunction(x,coefficients,x_vals):
 	right_index = len(x_vals)-1
 	left_index = 0
@@ -46,7 +46,7 @@ def evalCubicSharpnessFunction(x,coefficients,x_vals):
 	d = coefficients[4*(middle_index-1)+3]
 
 	return a*x**3 + b*x**2 + c*x + d
-'''
+
 
 def evaluateSharpnessFunction(x, coefficients, x_vals):
 	# Find left and right bounds of x from x_vals
@@ -144,4 +144,5 @@ if __name__ == '__main__':
 	# Find the optimum sharpness and focus distance using Golden-Section 
 	opt = findOptimum(x_vals[0],x_vals[len(x_vals)-1],coefficients,x_vals)
 	print 'X: %f, Y: %f' % (opt[0], opt[1])
-	img_util.plotParabolas(coefficients, x_vals, 'Quadratic Spline for Subject #' + subject_name, opt[0], opt[1])
+	img_util.plotCubic(coefficients, x_vals, 'Cubic Spline for Subject #' + subject_name, opt[0], opt[1])
+	# img_util.plotParabolas(coefficients, x_vals, 'Quadratic Spline for Subject #' + subject_name, opt[0], opt[1])
