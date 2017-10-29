@@ -14,7 +14,7 @@ import img_util, quadratic_spline
 def solve(A, b):
     # Initialize variables for size of array and x vector
     n = len(b)
-    x = np.zeros(n,1)
+    x = np.zeros((n,1))
 
     ###########################
     ###  Elimination stage  ###
@@ -26,15 +26,17 @@ def solve(A, b):
         pivoting_element = A[i][i]
         pivoting_index = i
         for row_index in range(i+1,n):
-            if A[row_index][i] > pivoting_element:
+            if abs(A[row_index][i]) > abs(pivoting_element):
                 pivoting_element = A[row_index][i]
                 pivoting_index = row_index
         if pivoting_index != i:
             # Swap rows
-            temp = A[i]
-            A[i] = A[pivoting_index]
-            A[pivoting_index] = temp
-
+            temp = list(A[i])
+            A[i] = list(A[pivoting_index])
+            A[pivoting_index] = list(temp)
+            temp = list(b[i])
+            b[i] = list(b[pivoting_index])
+            b[pivoting_index] = list(temp)
         # Iterate through rows of A beneath current row
         for row_index in range(i+1,n):
             # Calculate f factor
@@ -53,7 +55,7 @@ def solve(A, b):
         x[i] = b[i]
 
         # Loop through every column from the left   
-        for j in range(n):
+        for j in range(i,n):
             # Subtract all elements from x[i] except for itself
             if i != j:
                 x[i] -= A[i][j]*x[j]
@@ -69,5 +71,8 @@ def solve(A, b):
 if __name__ == '__main__':
     sample_points = [(0,0),(1,3),(2,1),(4,5)]
     A,b = quadratic_spline.getAMatrixAndBVector(sample_points)
+    print A
+    print b
     x = solve(A,b)
+    print x
     sys.exit()
