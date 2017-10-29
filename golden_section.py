@@ -5,7 +5,7 @@
 '''
 import sys, os, math
 
-import sharpness_calc, quadratic_spline, gaussian_elimination, img_util
+import sharpness_calc, quadratic_spline, cubic_spline, gaussian_elimination, img_util
 
 REQ_ERR = 0.01
 GR = (math.sqrt(5) - 1)/2
@@ -98,8 +98,8 @@ def findOptimum(xlow, xup, coefficients, x_vals):
 		d = GR*d
 
 		# Calculate y values for given x1 and x2 values
-		y1 = evaluateSharpnessFunction(x1,coefficients,x_vals)
-		y2 = evaluateSharpnessFunction(x2,coefficients,x_vals)
+		y1 = evalCubicSharpnessFunction(x1,coefficients,x_vals)
+		y2 = evalCubicSharpnessFunction(x2,coefficients,x_vals)
 		if (y1 >= y2):
 			max_err = max(abs(xup-x1), abs(x1-x2))
 			if (max_err < REQ_ERR):
@@ -132,9 +132,10 @@ if __name__ == '__main__':
 		points = sharpness_calc.getPoints(subject_name, show_images=False)
 	else:
 		points = sharpness_calc.getPoints()
+	print points
 
 	# Get A matrix and b vector required to solve for coefficients of quadratic spline
-	A,b = quadratic_spline.getAMatrixAndBVector(points)
+	A,b = cubic_spline.getAMatrixAndBVector(points)
 
 	# Solve for coefficients using Gaussian Elimination
 	coefficients = gaussian_elimination.solve(A,b)
