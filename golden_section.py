@@ -5,7 +5,7 @@
 '''
 import sys, os, math
 
-import sharpness_calc, quadratic_spline, gaussian_elimination
+import sharpness_calc, quadratic_spline, gaussian_elimination, img_util
 
 REQ_ERR = 0.01
 GR = (math.sqrt(5) - 1)/2
@@ -29,7 +29,7 @@ def evaluateSharpnessFunction(x, coefficients, x_vals):
 	# Use a binary search
 	right_index = len(x_vals)-1
 	left_index = 0
-	middle_index = int((left_index+right_index)/2)
+	middle_index = int(math.ceil((left_index+right_index)/2.0))
 	while (x > x_vals[middle_index] or x < x_vals[middle_index-1]):
 		if (middle_index == 0):
 			print "Could not find x=%f with bounds of x_vals (%f,%f)!\n" % (x, x_vals[0], x_vals[len(x_vals)-1])
@@ -38,7 +38,7 @@ def evaluateSharpnessFunction(x, coefficients, x_vals):
 			left_index = middle_index
 		elif (x < x_vals[middle_index-1]):
 			right_index = middle_index-1
-		middle_index = int((left_index+right_index)/2)
+		middle_index = int(math.ceil((left_index+right_index)/2.0))
 
 	# Extract the appropriate quadratic coefficients
 	a = coefficients[3*(middle_index-1)]
@@ -78,7 +78,6 @@ def findOptimum(xlow, xup, coefficients, x_vals):
 		# Calculate y values for given x1 and x2 values
 		y1 = evaluateSharpnessFunction(x1,coefficients,x_vals)
 		y2 = evaluateSharpnessFunction(x2,coefficients,x_vals)
-
 		if (y1 >= y2):
 			max_err = max(abs(xup-x1), abs(x1-x2))
 			if (max_err < REQ_ERR):
@@ -122,3 +121,4 @@ if __name__ == '__main__':
 	# Find the optimum sharpness and focus distance using Golden-Section 
 	opt = findOptimum(x_vals[0],x_vals[len(x_vals)-1],coefficients,x_vals)
 	print 'X: %f, Y: %f' % (opt[0], opt[1])
+	img_util.plotParabolas(coefficients, x_vals, 'Quadratic Spline')

@@ -68,6 +68,21 @@ def plotPoints(points, title, maximize=True):
     plt.show()
 
 
+def plotParabolas(coefficients, x_vals, title, maximize=True):
+    x = []
+    y = []
+    for i in range(len(x_vals)-1):
+        for x_val in range(x_vals[i],x_vals[i+1]):
+            x.append(x_val)
+            y_val = coefficients[3*i]*x_val**2 + coefficients[3*i+1]*x_val + coefficients[3*i+2]
+            y.append(y_val)
+    plt.switch_backend('TkAgg')
+    if (maximize):
+        fig_manager = plt.get_current_fig_manager()
+        fig_manager.resize(*fig_manager.window.maxsize())
+    plt.title(title)
+    plt.scatter(x,y)
+    plt.show()
 '''
 @name       saveImageRGB
 @brief      Writes an RGB image to a file
