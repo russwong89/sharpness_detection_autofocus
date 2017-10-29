@@ -12,7 +12,7 @@ import numpy as np
 
 import img_util
 
-
+# Assumes points are ordered by x-value
 def getAMatrixAndBVector(points):
     if len(points) <= 1:
         print 'Not enough points!\n'
@@ -21,6 +21,8 @@ def getAMatrixAndBVector(points):
     # Extract x and y values
     x = [p[0] for p in points]
     y = [p[1] for p in points]
+    print x
+    print y
     # For N data points, we will be solving for 3*(N-1) unknowns
     #   There are N-1 parabolas required to be fit in the splines, and
     #   three unknowns a,b and c for each parabola, where a parabola is
@@ -38,13 +40,13 @@ def getAMatrixAndBVector(points):
     # E.g. x[0]^2 * a0 + x[0] * b0 + 1 * c0 = y[0]    
     row_count = 0
     while (row_count < 2*n):
-        A[row_count][3*row_count/2] = x[row_count/2]^2
+        A[row_count][3*row_count/2] = x[row_count/2]**2
         A[row_count][3*row_count/2+1] = x[row_count/2]
         A[row_count][3*row_count/2+2] = 1
         b[row_count] = y[row_count/2]
 
-        A[row_count+1][3*row_count/2] = x[row_count/2+1]^2
-        A[row_count+1][3*row_count/2+1] = x[row_count/2]
+        A[row_count+1][3*row_count/2] = x[row_count/2+1]**2
+        A[row_count+1][3*row_count/2+1] = x[row_count/2+1]
         A[row_count+1][3*row_count/2+2] = 1
         b[row_count+1] = y[row_count/2+1]
 
@@ -58,8 +60,8 @@ def getAMatrixAndBVector(points):
     while (row_count < 3*n-1):
         A[row_count][3*(row_count-2*n)] = 2*x[row_count-2*n+1]
         A[row_count][3*(row_count-2*n)+1] = 1
-        A[row_count][3*(row_count-2*n)+2] = -2*x[row_count-2*n+2]
-        A[row_count][3*(row_count-2*n)+3] = -1
+        A[row_count][3*(row_count-2*n)+3] = -2*x[row_count-2*n+1]
+        A[row_count][3*(row_count-2*n)+4] = -1
         # No need to update b because all equations are equal to 0
         row_count += 1
 
@@ -70,4 +72,9 @@ def getAMatrixAndBVector(points):
     return A,b
 
 if __name__ == '__main__':
+    sample_points = [(0,0),(1,3),(2,1),(4,5)]
+    A,b = getAMatrixAndBVector(sample_points)
+    print A
+    print b
+    img_util.plotPoints(sample_points, 'Points')
     sys.exit()
