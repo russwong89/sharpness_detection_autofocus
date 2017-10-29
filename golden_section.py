@@ -1,37 +1,12 @@
 '''
 @name	golden_section.py
-@brief	find optimum of the given function
+@brief	Main file for finding the optimum of the given function
 @author	Yun-Ha Jung, 2017
 '''
 import sys, os, math
-'''
-	Pseudo Code
-	1. get 2 initial points xl and xu, (xlow, ylow) and (xup, yup), and the function defined using quadratic spline
-	2. calculate x1 and x2 using golden ratio ((sqrt(5) - 1)/2)*(xup-xlow)
-		x1 = xlow + distance
-		x2 = xup - distance
-	3. while calc_err > req_err
-		distance = ratio*distance
-		calculate y1 and y2 using the given function
-		if y1 > y2
-			calculate max err
-			if max error less than required err
-				optimum = x1
-				break the loop
-		 	xlow = x2
-		 	x2 = xu - distance
-			x1 = xl + distance
-		   
-		else if y2 > y1
-			calculate max error
-			if max error less than required err
-				optimum = x2
-				break the loop
-			xup = x1
-			x2 = xu - distance
-			x1 = xl + distance
-'''
+
 REQ_ERR = 0.01
+GR = (math.sqrt(5) - 1)/2
 
 # test function for testing the functionality
 def testFunction(x):
@@ -47,13 +22,19 @@ def testFunction(x):
 
 def findOptimum(xlow, xup):
 	optimum = (0,0)
-	R = (math.sqrt(5) - 1)/2
-	d = R*abs(xup-xlow)
+	
+	# Calculate distance to define x1 and x2
+	d = GR*abs(xup-xlow)
 	x1 = xlow + d
 	x2 = xup - d
 
+	# Infinite loop to find the optimum of a function
+	# Break the loop then the calculated error is smaller than REQ_ERR
 	while(True):
-		d = R*d
+		# Calculate new distance
+		d = GR*d
+
+		# Calculate y values for given x1 and x2 values
 		y1 = testFunction(x1)
 		y2 = testFunction(x2)
 
