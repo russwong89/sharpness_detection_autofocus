@@ -24,6 +24,28 @@ def testFunction(x):
 			x_vals: A vector of distance values corresponding to the endpoints of each parabola in the spline
 @return 	float: The calculated sharpness value
 '''
+def evalCubicSharpnessFunction(x,coefficients,x_vals):
+	right_index = len(x_vals)-1
+	left_index = 0
+	middle_index = int(math.ceil((left_index+right_index)/2.0))
+	while (x > x_vals[middle_index] or x < x_vals[middle_index-1]):
+		if (middle_index == 0):
+			print "Could not find x=%f with bounds of x_vals (%f,%f)!\n" % (x, x_vals[0], x_vals[len(x_vals)-1])
+			return -1
+		if (x > x_vals[middle_index]):
+			left_index = middle_index
+		elif (x < x_vals[middle_index-1]):
+			right_index = middle_index-1
+		middle_index = int(math.ceil((left_index+right_index)/2.0))
+
+	# Extract the appropriate quadratic coefficients
+	a = coefficients[4*(middle_index-1)]
+	b = coefficients[4*(middle_index-1)+1]
+	c = coefficients[4*(middle_index-1)+2]
+	d = coefficients[4*(middle_index-1)+3]
+
+	return a*x**3 + b*x**2 + c*x + d
+'''
 def evaluateSharpnessFunction(x, coefficients, x_vals):
 	# Find left and right bounds of x from x_vals
 	# Use a binary search
@@ -48,7 +70,7 @@ def evaluateSharpnessFunction(x, coefficients, x_vals):
 	return a*x**2 + b*x + c
 
 	
-
+'''
 
 '''
 @name		findOptimum
