@@ -65,7 +65,7 @@ def getPoints(subject_name='111', show_images=False):
             img_util.plot(img, 'IMAGE', cmap='gray')
         img_util.saveImageBW('img_' + str(i) + '.png', img)    
         print 'Sharpness for img %d: %f' % (i, sharpness_vals[i])
-    return zip(distances, sharpness_vals)
+    return sorted(zip(distances, sharpness_vals))
 
 
 #######################

@@ -108,9 +108,9 @@ if __name__ == '__main__':
 	if len(sys.argv) > 1:
 		subject_name = sys.argv[1]
 		print subject_name
-		points = sc.getPoints(subject_name, show_images=False)
+		points = sharpness_calc.getPoints(subject_name, show_images=False)
 	else:
-		points = sc.getPoints()
+		points = sharpness_calc.getPoints()
 
 	# Get A matrix and b vector required to solve for coefficients of quadratic spline
 	A,b = quadratic_spline.getAMatrixAndBVector(points)
@@ -120,5 +120,5 @@ if __name__ == '__main__':
 	x_vals = [p[0] for p in points]
 
 	# Find the optimum sharpness and focus distance using Golden-Section 
-	opt = findOptimum(-5,5,coefficients,x_vals)
+	opt = findOptimum(x_vals[0],x_vals[len(x_vals)-1],coefficients,x_vals)
 	print 'X: %f, Y: %f' % (opt[0], opt[1])
