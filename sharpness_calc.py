@@ -77,7 +77,5 @@ if __name__ == '__main__':
         subject_name = sys.argv[1]
     points = getPoints(subject_name=subject_name, show_images=False)
     print points
-    x = [p[0] for p in points]
-    y = [p[1] for p in points]
-    img_util.plotPoints(x, y, "Points")
+    img_util.plotPoints(points, "Points")
     sys.exit()
