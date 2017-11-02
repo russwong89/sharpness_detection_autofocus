@@ -5,7 +5,7 @@
 '''
 import sys, os, math
 
-import sharpness_calc, quadratic_spline, cubic_spline, gaussian_elimination, img_util
+import sharpness_calc, cubic_spline, gaussian_elimination, img_util
 
 REQ_ERR = 0.01
 GR = (math.sqrt(5) - 1)/2
@@ -18,7 +18,7 @@ def testFunction(x):
 '''
 @name		evaluateSharpnessFunction
 @brief		Calculates an estimated sharpness value based on
-            quadratic splines
+            cubic splines
 @param[in]	x: The distance value at which the sharpness function should be evaluated
 			coefficients: A vector of a,b,c coefficients representing each parabola in the spline
 			x_vals: A vector of distance values corresponding to the endpoints of each parabola in the spline
@@ -39,7 +39,7 @@ def evalCubicSharpnessFunction(x,coefficients,x_vals):
 			right_index = middle_index-1
 		middle_index = int(math.ceil((left_index+right_index)/2.0))
 
-	# Extract the appropriate quadratic coefficients
+	# Extract the appropriate cubic coefficients
 	a = coefficients[4*(middle_index-1)]
 	b = coefficients[4*(middle_index-1)+1]
 	c = coefficients[4*(middle_index-1)+2]
@@ -64,7 +64,7 @@ def evaluateSharpnessFunction(x, coefficients, x_vals):
 			right_index = middle_index-1
 		middle_index = int(math.ceil((left_index+right_index)/2.0))
 
-	# Extract the appropriate quadratic coefficients
+	# Extract the appropriate cubic coefficients
 	a = coefficients[3*(middle_index-1)]
 	b = coefficients[3*(middle_index-1)+1]
 	c = coefficients[3*(middle_index-1)+2]
@@ -134,7 +134,7 @@ if __name__ == '__main__':
 		points = sharpness_calc.getPoints()
 	print points
 
-	# Get A matrix and b vector required to solve for coefficients of quadratic spline
+	# Get A matrix and b vector required to solve for coefficients of cubicratic spline
 	A,b = cubic_spline.getAMatrixAndBVector(points)
 
 	# Solve for coefficients using Gaussian Elimination
@@ -145,4 +145,3 @@ if __name__ == '__main__':
 	opt = findOptimum(x_vals[0],x_vals[len(x_vals)-1],coefficients,x_vals)
 	print 'X: %f, Y: %f' % (opt[0], opt[1])
 	img_util.plotCubic(coefficients, x_vals, 'Cubic Spline for Subject #' + subject_name, opt[0], opt[1])
-	# img_util.plotParabolas(coefficients, x_vals, 'Quadratic Spline for Subject #' + subject_name, opt[0], opt[1])
