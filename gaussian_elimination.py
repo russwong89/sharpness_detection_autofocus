@@ -9,7 +9,7 @@
 import sys, os, math, cv2
 import numpy as np
 
-import img_util, quadratic_spline
+import img_util, cubic_spline
 
 def solve(A, b):
     # Initialize variables for size of array and x vector
@@ -70,7 +70,7 @@ def solve(A, b):
 #######################
 if __name__ == '__main__':
     sample_points = [(0,0),(1,3),(2,1),(4,5)]
-    A,b = quadratic_spline.getAMatrixAndBVector(sample_points)
+    A,b = cubic_spline.getAMatrixAndBVector(sample_points)
     print A
     print b
     x = solve(A,b)
