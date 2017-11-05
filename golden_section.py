@@ -106,6 +106,7 @@ def findOptimum(xlow, xup, coefficients, x_vals):
 		# Calculate y values for given x1 and x2 values
 		y1 = evalCubicSharpnessFunction(x1,coefficients,x_vals)
 		y2 = evalCubicSharpnessFunction(x2,coefficients,x_vals)
+		# print "X1: %f Y1: %f X2: %f Y2: %f\n" % (x1, y1, x2, y2)
 
 		# Compare y1 and y2, if y1 is greater than y2 
 		# it means that the optimum falls between x2-xup range
