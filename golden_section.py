@@ -76,7 +76,7 @@ def evaluateSharpnessFunction(x, coefficients, x_vals):
 
 
 '''
-@name		findOptimum
+@name		goldenSection
 @brief		find optimum point (x,y) of the given function
 @param[in]	xlow: lower bound of the range where the optimum is
 			xup: upper bound of the range where the optimum is
@@ -86,7 +86,7 @@ def evaluateSharpnessFunction(x, coefficients, x_vals):
 				    (used for sharpness calculations)
 @return 	optimum: the optimum point (x,y)
 '''
-def findOptimum(xlow, xup, coefficients, x_vals):
+def goldenSection(xlow, xup, coefficients, x_vals):
 	optimum = (0,0)
 	
 	# Calculate distance to define x1 and x2
@@ -106,14 +106,13 @@ def findOptimum(xlow, xup, coefficients, x_vals):
 		# Calculate y values for given x1 and x2 values
 		y1 = evalCubicSharpnessFunction(x1,coefficients,x_vals)
 		y2 = evalCubicSharpnessFunction(x2,coefficients,x_vals)
-		# print "X1: %f Y1: %f X2: %f Y2: %f\n" % (x1, y1, x2, y2)
 
 		# Compare y1 and y2, if y1 is greater than y2 
 		# it means that the optimum falls between x2-xup range
 		# therefore all the x values from xlow to x2 can be eliminated
-		if (y1 >= y2):
+		if y1 >= y2:
 			max_err = max(abs(xup-x1), abs(x1-x2))
-			if (max_err < REQ_ERR):
+			if max_err < REQ_ERR:
 				optimum = (x1,y1)
 				break
 
@@ -126,9 +125,9 @@ def findOptimum(xlow, xup, coefficients, x_vals):
 		# Compare y1 and y2, if y2 is greater than y1
 		# it means that the optimum falls between x1-xlow range
 		# therefore all the x values from x1 to xup can be eliminated
-		elif (y2 > y1):
+		elif y2 > y1:
 			max_err = max(abs(x1-x2), abs(x2-xlow))
-			if (max_err < REQ_ERR):
+			if max_err < REQ_ERR:
 				optimum = (x2,y2)
 				break
 
@@ -162,6 +161,13 @@ if __name__ == '__main__':
 	x_vals = [p[0] for p in points]
 
 	# Find the optimum sharpness and focus distance using Golden-Section 
-	opt = findOptimum(x_vals[0],x_vals[len(x_vals)-1],coefficients,x_vals)
+	opt1 = goldenSection(x_vals[0],x_vals[math.ceil(len(x_vals)/2)],coefficients,x_vals)
+	opt2 = goldenSection(x_vals[math.ceil(len(x_vals)/2)+1],x_vals[len(x_vals)-1],coefficients,x_vals)
+
+	if opt1 >= opt2:
+		opt = opt1
+	elif opt2 > op1:
+		opt = opt2
+		
 	print 'X: %f, Y: %f' % (opt[0], opt[1])
 	img_util.plotCubic(coefficients, x_vals, 'Cubic Spline for Subject #' + subject_name, opt[0], opt[1])
