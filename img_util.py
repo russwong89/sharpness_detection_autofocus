@@ -104,7 +104,10 @@ def plotCubic(coefficients, x_vals, title, max_x, max_y, maximize=True):
     if (maximize):
         fig_manager = plt.get_current_fig_manager()
         fig_manager.resize(*fig_manager.window.maxsize())
-    plt.title(title)
+    plt.title(title, fontsize=36)
+    plt.xlabel('Focus Distance [mm]', fontsize=24)
+    plt.ylabel('Relative Sharpness Value', fontsize=24)
+    plt.tick_params(labelsize=20)
     plt.scatter(x,y)
     plt.plot(x_vals, y_vals, color='r')
     plt.plot(max_x, max_y, 'bo')
