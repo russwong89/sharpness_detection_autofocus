@@ -161,13 +161,13 @@ if __name__ == '__main__':
 	x_vals = [p[0] for p in points]
 
 	# Find the optimum sharpness and focus distance using Golden-Section 
-	opt1 = goldenSection(x_vals[0],x_vals[math.ceil(len(x_vals)/2)],coefficients,x_vals)
-	opt2 = goldenSection(x_vals[math.ceil(len(x_vals)/2)+1],x_vals[len(x_vals)-1],coefficients,x_vals)
-
-	if opt1 >= opt2:
+	opt1 = goldenSection(x_vals[0],(x_vals[0]+x_vals[len(x_vals)-1])/2,coefficients,x_vals)
+	opt2 = goldenSection((x_vals[0]+x_vals[len(x_vals)-1])/2,x_vals[len(x_vals)-1],coefficients,x_vals)
+	
+	if (opt1[1] > opt2[1]):
 		opt = opt1
-	elif opt2 > op1:
+	else:
 		opt = opt2
-		
+
 	print 'X: %f, Y: %f' % (opt[0], opt[1])
 	img_util.plotCubic(coefficients, x_vals, 'Cubic Spline for Subject #' + subject_name, opt[0], opt[1])
