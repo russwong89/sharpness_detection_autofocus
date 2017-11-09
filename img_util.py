@@ -89,6 +89,16 @@ def plotParabolas(coefficients, x_vals, title, max_x, max_y, maximize=True):
     plt.plot(max_x, max_y, 'bo')
     plt.show()
 
+'''
+@name       plotCubic
+@brief      Plot cubic splines
+@param[in]  coefficients: vector of coefficients of cubic equations
+            x_vals: focus distance values from data points
+            title: title of the plot
+            max_x: x value of the maximum of the cubic spline
+            max_y: y value of the maximum of the cubic spline
+            maximize: whether the plot window is maximized
+'''
 def plotCubic(coefficients, x_vals, title, max_x, max_y, maximize=True):
     x = []
     y = []

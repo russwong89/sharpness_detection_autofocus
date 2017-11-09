@@ -11,6 +11,13 @@ import numpy as np
 
 import img_util, cubic_spline
 
+'''
+@name       solve
+@brief      solve system of equations [A]{x} = {b}
+@param[in]  A: coefficient matrix
+            b: the solution vector
+@return     x: the vector being solved
+'''
 def solve(A, b):
     # Initialize variables for size of array and x vector
     n = len(b)

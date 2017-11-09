@@ -12,6 +12,16 @@ import numpy as np
 
 import img_util
 
+'''
+@name       getAMatrixAndBVector
+@brief      define and return A matrix and b vector or [A]{x} = {b}
+            using cubic splines
+@param[in]  points: data points (focus distance, sharpness)
+                    extracted from images loaded
+@return     A: coefficient matrix
+            b: the solution vector
+'''
+
 # Assumes points are ordered by x-value
 def getAMatrixAndBVector(points):
     if len(points) <= 1:
